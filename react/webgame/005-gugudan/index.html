@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+	<script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+	<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Document</title>
+</head>
+<body>
+	<div id="root"></div>
+	<script type="text/babel">
+		class Gugudan extends React.Component {
+
+			// YOU CAN DELETE constructor SECTION
+			/*
+			constructor(props) {
+				super(props);
+				this.state = {
+					first: Math.ceil(Math.random() * 9),
+					second: Math.ceil(Math.random() * 9),
+					value: '',
+					result: '',
+				};
+			}
+			*/
+
+			state = {
+				first: Math.ceil(Math.random() * 9),
+				second: Math.ceil(Math.random() * 9),
+				value: '',
+				result: '',
+			};
+			
+			// DO NOT USE "function () {}" as Method within Class
+			// onSubmit = function (e) {} 
+			// onChange = function (e) {} 
+			onSubmit = (e) => {
+				e.preventDefault();
+				if (parseInt(this.state.value) === this.state.first * this.state.second) {
+					this.setState({
+						result: `${this.state.first} x ${this.state.second} = ${this.state.value} you're correct!`,
+						first: Math.ceil(Math.random() * 9),
+						second: Math.ceil(Math.random() * 9),
+						value: '',
+					});
+				} else {
+					this.setState({
+						result: 'incorrect',
+						value: '',
+					});
+				}
+			};
+
+			
+			onChange = (e) => {
+				this.setState({ value: e.target.value });
+			};
+
+
+			render() {
+				return (
+					<React.Fragment>
+						<div>{this.state.first} multiplied by {this.state.second}?</div>
+						<form onSubmit={this.onSubmit}>
+							<input type="number" value={this.state.value} onChange={this.onChange} />
+							<button type="submit">submit!</button>
+						</form>
+						<div>{this.state.result}</div>
+					</React.Fragment>
+				);
+			}
+		}
+	</script>
+	<script type="text/babel">
+		ReactDOM.render(<Gugudan />, document.querySelector('#root'))
+	</script>
+</body>
+</html>
